@@ -1,56 +1,64 @@
 # Task3_MySQL
-Inventory Management System
-Description
+# Inventory Management System
 
-This project is a simple Inventory Management System implemented in MySQL. It allows you to manage products in a store by adding new products, updating stock, and retrieving product details using stored procedures.
+## Description
+This project is a simple **Inventory Management System** using **MySQL**.  
+It allows you to manage products by adding new items, updating stock, and retrieving product details using **stored procedures**.
 
-Database
-Database Name: Inventorydb
-Table: product
-| Column Name | Data Type     | Description                   |
-| ----------- | ------------- | ----------------------------- |
-| product\_id | INT           | Primary Key, Auto Increment   |
-| name        | VARCHAR(50)   | Name of the product           |
-| quantity    | INT           | Quantity in stock (default 0) |
-| price       | DECIMAL(10,2) | Price of the product          |
+---
 
-Stored Procedures
+## Database
 
-AddProduct
+**Database Name:** `Inventorydb`  
 
-Adds a new product to the inventory.
+**Table:** `product`  
 
-Parameters:
+| Column Name | Data Type     | Description                  |
+| ----------- | ------------ | ---------------------------- |
+| product_id  | INT          | Primary Key, Auto Increment  |
+| name        | VARCHAR(50)  | Name of the product          |
+| quantity    | INT          | Quantity in stock (default 0)|
+| price       | DECIMAL(10,2)| Price of the product         |
 
-p_name (VARCHAR) – Product name
+---
 
-p_qty (INT) – Quantity
+## Stored Procedures
 
-p_price (DECIMAL) – Price
+### 1. AddProduct
+- Adds a new product to the inventory.  
+- **Parameters:**  
+  - `p_name` (VARCHAR) – Product name  
+  - `p_qty` (INT) – Quantity  
+  - `p_price` (DECIMAL) – Price  
 
-UpdateStock
+### 2. UpdateStock
+- Updates the quantity of an existing product.  
+- **Parameters:**  
+  - `p_id` (INT) – Product ID  
+  - `p_qty_change` (INT) – Quantity change (+ to add, - to reduce)  
 
-Updates the quantity of an existing product.
+### 3. GetProduct
+- Retrieves product details by ID.  
+- **Parameters:**  
+  - `p_id` (INT) – Product ID  
 
-Parameters:
+---
 
-p_id (INT) – Product ID
+## Sample Usage
 
-p_qty_change (INT) – Quantity change (+ to add, - to reduce)
+```sql
+-- Add products
+CALL AddProduct('Laptop', 10, 55000.00);
+CALL AddProduct('Mouse', 50, 500.00);
+CALL AddProduct('Keyboard', 20, 1200.00);
 
-GetProduct
+-- View all products
+SELECT * FROM product;
 
-Retrieves product details by ID.
+-- Update stock
+CALL UpdateStock(1, 5);  -- Add 5 laptops
+CALL UpdateStock(2, -2); -- Reduce 2 mice
 
-Parameters:
-
-p_id (INT) – Product ID
-Features
-
-Add new products to the inventory
-
-Update stock quantity easily
-
-Retrieve product details by ID
-
-Simple, clean SQL-based implementation
+-- Get product details
+CALL GetProduct(1);  -- Laptop
+CALL GetProduct(2);  -- Mouse
